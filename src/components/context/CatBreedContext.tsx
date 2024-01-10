@@ -98,7 +98,7 @@ const CatBreedProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const useCatBreed = () => {
+const useCatBreedContext = () => {
   const context = useContext(CatBreedContext);
 
   if (!context) {
@@ -108,4 +108,4 @@ const useCatBreed = () => {
   return context;
 };
 
-export { CatBreedProvider, useCatBreed };
+export { CatBreedProvider, useCatBreedContext };

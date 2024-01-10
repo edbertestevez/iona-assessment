@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -8,11 +8,11 @@ import { useLoaderData } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CatCard from './CatCard';
-import { Breed } from '../../../types/Breed';
-import { useCatBreed } from '../../context/CatBreedContext';
+import { HomepageLoaderData } from './loader';
+import { useCatBreedContext } from '../../context/CatBreedContext';
 
 const Homepage: React.FC = () => {
-  const breeds = useLoaderData() as Breed[];
+  const { breeds, breedQuery } = useLoaderData() as HomepageLoaderData;
   const {
     breedId,
     setBreed,
@@ -22,7 +22,13 @@ const Homepage: React.FC = () => {
     isRequested,
     isLoading,
     isEndReached,
-  } = useCatBreed();
+  } = useCatBreedContext();
+
+  useEffect(() => {
+    if (breedQuery && breedId !== breedQuery && breedId === '') {
+      setBreed(breedQuery);
+    }
+  }, [breedId, breedQuery, setBreed]);
 
   const handleBreedChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
