@@ -12,8 +12,8 @@ import {
 import { Link, useLoaderData } from 'react-router-dom';
 import styled from 'styled-components';
 
-import AppRoutes from '../../config/routes';
-import { BreedImage } from '../../types/Breed';
+import AppRoutes from '../../../config/routes';
+import { BreedImage } from '../../../types/Breed';
 
 const SingleCat: React.FC = () => {
   const breed = useLoaderData() as BreedImage;
@@ -28,14 +28,14 @@ const SingleCat: React.FC = () => {
     <InfoContainer>
       <Card>
         <CardHeader>
-          <Link to={AppRoutes.Root}>
+          <Link to={`${AppRoutes.Root}?breed=${breedInfo.id}`}>
             <Button>Back</Button>
           </Link>
         </CardHeader>
         <CardBody>
           <Row>
-            <Col>
-              <StyledImage src={breed.url} fluid />
+            <Col md={12} lg={6}>
+              <StyledImage src={breed.url} />
             </Col>
             <Col>
               <Name>{breedInfo?.name}</Name>
@@ -56,7 +56,7 @@ const SingleCat: React.FC = () => {
 };
 
 const InfoContainer = styled(Container)`
-  margin: 32px;
+  padding: 32px;
 `;
 
 const StyledImage = styled(Image)`
