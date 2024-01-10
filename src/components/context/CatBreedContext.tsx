@@ -72,11 +72,11 @@ const CatBreedProvider = ({ children }: { children: ReactNode }) => {
       setIsEndReached(false);
       setIsRequested(false);
 
-      if (id !== '') {
+      if (id !== '' && id !== breedId) {
         fetchBreedImages(id, 1);
       }
     },
-    [fetchBreedImages],
+    [fetchBreedImages, breedId],
   );
 
   return (

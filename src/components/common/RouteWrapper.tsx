@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import LoadingCat from '../../assets/loading.gif';
 
 // Wraps the routes to show suspense fallback while route loaders are loading
-const RouteWrapper = () => {
+const RouteWrapper: React.FC = () => {
   const { state } = useNavigation();
 
   if (state === 'loading') {

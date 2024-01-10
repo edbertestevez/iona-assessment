@@ -32,8 +32,8 @@ const Homepage: React.FC = () => {
 
   const handleBreedChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const breedId = event.target.value;
-      setBreed(breedId);
+      const currBreedId = event.target.value;
+      setBreed(currBreedId);
     },
     [setBreed],
   );

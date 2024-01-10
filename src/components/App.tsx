@@ -18,28 +18,29 @@ import SingleCatLoader from './containers/SingleCat/loader';
 
 import { CatBreedProvider } from './context/CatBreedContext';
 import AppRoutes from '../config/routes';
+import ErrorFallback from './common/ErrorFallback';
 
 const catBreedRoutes = (
-  <Route element={<RouteWrapper />}>
-    <Route path={AppRoutes.Root}>
-      {/* React router v6 - loader loads data to the component */}
-      <Route index element={<Homepage />} loader={HomepageLoader} />
+  <Route path={AppRoutes.Root}>
+    {/* Homepage */}
+    <Route index element={<Homepage />} loader={HomepageLoader} />
 
-      {/* React router v6 - specify '*' for exact routing */}
-      <Route
-        path={AppRoutes.SingleCat}
-        element={<SingleCat />}
-        loader={SingleCatLoader}
-      />
-    </Route>
+    {/* Single Cat Pate - exact routing */}
+    <Route
+      path={AppRoutes.SingleCat}
+      element={<SingleCat />}
+      loader={SingleCatLoader}
+    />
   </Route>
 );
 
 const router = createBrowserRouter(
-  createRoutesFromElements([
-    catBreedRoutes,
-    // Add other routes here
-  ]),
+  createRoutesFromElements(
+    <Route element={<RouteWrapper />} errorElement={<ErrorFallback />}>
+      {catBreedRoutes}
+      {/* Add other routes here */}
+    </Route>,
+  ),
 );
 
 function App() {

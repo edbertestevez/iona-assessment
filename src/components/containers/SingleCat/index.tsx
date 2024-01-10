@@ -61,6 +61,8 @@ const InfoContainer = styled(Container)`
 
 const StyledImage = styled(Image)`
   width: 100%;
+  max-height: 768px;
+  object-fit: contain;
 `;
 
 const Name = styled.p`
