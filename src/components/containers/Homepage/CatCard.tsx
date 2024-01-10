@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, CardBody, CardFooter, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { BreedImage } from '../../../types/Breed';
@@ -11,7 +12,9 @@ const CatCard: React.FC<BreedImage> = ({ id, url }) => {
         <StyledImage src={url} alt={id} />
       </StyledBody>
       <StyledFooter>
-        <Button variant="link">View Details</Button>
+        <Link to={id}>
+          <Button variant="link">View Details</Button>
+        </Link>
       </StyledFooter>
     </StyledCard>
   );

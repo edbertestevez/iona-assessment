@@ -14,6 +14,7 @@ import { useCatBreed } from '../../context/CatBreedContext';
 const Homepage: React.FC = () => {
   const breeds = useLoaderData() as Breed[];
   const {
+    breedId,
     setBreed,
     breedImages,
     getNextPage,
@@ -39,7 +40,11 @@ const Homepage: React.FC = () => {
     <Body>
       <Title>Cat Breeds</Title>
 
-      <Selection aria-label="Cat Breeds" onChange={handleBreedChange}>
+      <Selection
+        aria-label="Cat Breeds"
+        onChange={handleBreedChange}
+        value={breedId}
+      >
         <option value="">Select Cat Breed</option>
 
         {breeds?.map(({ id, name }) => (
