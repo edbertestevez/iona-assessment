@@ -2,9 +2,9 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
-  useEffect,
   createContext,
   useState,
+  useMemo,
 } from 'react';
 
 import api from '../../api';
@@ -12,10 +12,14 @@ import { BreedImage } from '../../types/Breed';
 
 interface CatBreedContextProps {
   breedId: string;
-  setBreedId: React.Dispatch<React.SetStateAction<string>>;
+  setBreed: (id: string) => void;
   breedImages: BreedImage[];
   setBreedImages: React.Dispatch<React.SetStateAction<BreedImage[]>>;
+  hasBreedImages: boolean;
+  isEndReached: boolean;
   isLoading: boolean;
+  isRequested: boolean;
+  getNextPage: () => void;
 }
 
 const CatBreedContext = createContext<CatBreedContextProps | undefined>(
@@ -25,29 +29,69 @@ const CatBreedContext = createContext<CatBreedContextProps | undefined>(
 const CatBreedProvider = ({ children }: { children: ReactNode }) => {
   const [breedId, setBreedId] = useState<string>('');
   const [breedImages, setBreedImages] = useState<BreedImage[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isRequested, setIsRequested] = useState<boolean>(false);
+  const [isEndReached, setIsEndReached] = useState<boolean>(false);
 
-  const fetchImages = useCallback(async () => {
-    setIsLoading(true);
-    const images = await api.getBreedImages({ breedId, page });
-    setBreedImages(images);
-    setIsLoading(false);
-  }, [breedId, page]);
+  const hasBreedImages = useMemo(() => breedImages.length > 0, [breedImages]);
 
-  useEffect(() => {
-    // Reset when default option is selected
-    if (breedId === '') {
+  const fetchBreedImages = useCallback(
+    async (currBreedId: string, currPage: number) => {
+      setIsLoading(true);
+
+      const images = await api.getBreedImages({
+        breedId: currBreedId,
+        page: currPage,
+      });
+
+      if (images.length === 0) {
+        setIsEndReached(true);
+      }
+
+      setBreedImages((prevImages) => prevImages.concat(images));
+
+      setIsLoading(false);
+      setIsRequested(true);
+    },
+    [],
+  );
+
+  const getNextPage = useCallback(() => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchBreedImages(breedId, nextPage);
+  }, [fetchBreedImages, page, breedId]);
+
+  const setBreed = useCallback(
+    (id: string) => {
+      // Reset values on change
+      setBreedId(id);
       setBreedImages([]);
       setPage(1);
-      return;
-    }
+      setIsEndReached(false);
+      setIsRequested(false);
 
-    fetchImages();
-  }, [breedId, fetchImages]);
+      if (id !== '') {
+        fetchBreedImages(id, 1);
+      }
+    },
+    [fetchBreedImages],
+  );
+
   return (
     <CatBreedContext.Provider
-      value={{ breedId, setBreedId, breedImages, setBreedImages, isLoading }}
+      value={{
+        breedId,
+        setBreed,
+        breedImages,
+        setBreedImages,
+        hasBreedImages,
+        isEndReached,
+        isLoading,
+        isRequested,
+        getNextPage,
+      }}
     >
       {children}
     </CatBreedContext.Provider>
