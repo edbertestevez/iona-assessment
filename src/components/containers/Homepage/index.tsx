@@ -90,7 +90,7 @@ const Homepage: React.FC = () => {
 };
 
 const Body = styled.div`
-  padding: 32px;
+  margin: 32px;
 `;
 
 const Title = styled.h1``;

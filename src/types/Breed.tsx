@@ -13,4 +13,11 @@ export type BreedImage = {
   url: string;
   height: number;
   width: number;
+  breeds: {
+    id: string;
+    name: string;
+    origin: string;
+    temperament: string;
+    description: string;
+  }[];
 };

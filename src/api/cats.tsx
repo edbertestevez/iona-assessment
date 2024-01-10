@@ -41,3 +41,15 @@ export const getBreedImages = async ({
     throw err;
   }
 };
+
+export const getBreedImageWithInfo = async (imageId: string) => {
+  try {
+    const breedImageWithInfo = await axios.get(
+      `https://api.thecatapi.com/v1/images/${imageId}`,
+    );
+    return breedImageWithInfo.data;
+  } catch (err) {
+    console.error('Error fetching cat breed image with info data: ', err);
+    throw err;
+  }
+};
