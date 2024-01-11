@@ -55,9 +55,8 @@ const Homepage: React.FC = () => {
       >
         <option value="">Select Cat Breed</option>
 
-        {breeds?.map(({ id, name }, index) => (
-          // Note: Not ideal but since the API returns same random results, I added index
-          <option value={id} key={`${index}_${id}`}>
+        {breeds?.map(({ id, name }) => (
+          <option value={id} key={id}>
             {name}
           </option>
         ))}
@@ -77,14 +76,8 @@ const Homepage: React.FC = () => {
         <>
           <ListContainer fluid>
             <Row>
-              {breedImages.map((image, index) => (
-                <ListItem
-                  key={`${index}_${image.id}`}
-                  xs={12}
-                  s={6}
-                  md={4}
-                  lg={3}
-                >
+              {breedImages.map((image) => (
+                <ListItem key={image.id} xs={12} s={6} md={4} lg={3}>
                   <CatCard {...image} />
                 </ListItem>
               ))}
