@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
+// Note: React.StrictMode causes 1st API in dev to be called twice
 root.render(
   <React.StrictMode>
     <App />

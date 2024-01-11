@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import ErrorCat from '../../assets/error.gif';
 import AppRoutes from '../../config/routes';
-import { MESSAGES } from '../../constants';
+import MESSAGES from '../../constants/messages';
 
 const ErrorFallback: React.FC = () => {
   return (

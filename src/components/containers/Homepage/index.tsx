@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import CatCard from './CatCard';
 import { HomepageLoaderData } from './loader';
-import { MESSAGES } from '../../../constants';
+import MESSAGES from '../../../constants/messages';
 import { useCatBreedContext } from '../../context/CatBreedContext';
 
 const Homepage: React.FC = () => {
