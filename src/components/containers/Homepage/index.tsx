@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import CatCard from './CatCard';
 import { HomepageLoaderData } from './loader';
 import MESSAGES from '../../../constants/messages';
-import { useCatBreedContext } from '../../context/CatBreedContext';
+import { useCatBreedContext } from '../../../context/CatBreedContext';
 
 const Homepage: React.FC = () => {
   const { breeds, breedQuery } = useLoaderData() as HomepageLoaderData;

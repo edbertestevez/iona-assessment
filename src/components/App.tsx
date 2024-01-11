@@ -16,7 +16,7 @@ import HomepageLoader from './containers/Homepage/loader';
 import SingleCat from './containers/SingleCat';
 import SingleCatLoader from './containers/SingleCat/loader';
 
-import { CatBreedProvider } from './context/CatBreedContext';
+import { CatBreedProvider } from '../context/CatBreedContext';
 import AppRoutes from '../config/routes';
 import ErrorFallback from './common/ErrorFallback';
 

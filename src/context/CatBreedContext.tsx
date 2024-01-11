@@ -7,8 +7,8 @@ import React, {
   useMemo,
 } from 'react';
 
-import api from '../../api';
-import { BreedImage } from '../../types/Breed';
+import api from '../api';
+import { BreedImage } from '../types/Breed';
 
 interface CatBreedContextProps {
   breedId: string;
