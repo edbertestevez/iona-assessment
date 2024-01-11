@@ -50,6 +50,7 @@ project
 │   └─── assets                             # Application assets like images, etc
 │   └─── config                             # Configuration files like routes and api
 │   └─── constants                          # Constants files like messages, labels, etc.
+│   └─── context                            # Context API definitions
 │   └─── components                         # Application components
 │          └─── common                      # Reusable components on modules
 │          └─── containers                  # Application modules screens
