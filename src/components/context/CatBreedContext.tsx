@@ -19,12 +19,36 @@ interface CatBreedContextProps {
   isEndReached: boolean;
   isLoading: boolean;
   isRequested: boolean;
+  isError: boolean;
   getNextPage: () => void;
 }
 
 const CatBreedContext = createContext<CatBreedContextProps | undefined>(
   undefined,
 );
+
+/**
+ * The 'pagination-count' and 'pagination-limit' can be found in the response
+ * headers but since response images could be duplicated from previous response,
+ * I reduced the response and check for unique images only
+ */
+const filterUniqueImages = (prevImages: BreedImage[], images: BreedImage[]) => {
+  // Filter and append only unique images from the paginated response
+  const uniqueImages: BreedImage[] = images.reduce(
+    (acc: BreedImage[], currImage: BreedImage) => {
+      const isExisting = acc.find((item) => item.id === currImage.id);
+
+      if (!isExisting) {
+        return acc.concat(currImage);
+      }
+
+      return acc;
+    },
+    prevImages,
+  );
+
+  return uniqueImages;
+};
 
 const CatBreedProvider = ({ children }: { children: ReactNode }) => {
   const [breedId, setBreedId] = useState<string>('');
@@ -33,28 +57,42 @@ const CatBreedProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRequested, setIsRequested] = useState<boolean>(false);
   const [isEndReached, setIsEndReached] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const hasBreedImages = useMemo(() => breedImages.length > 0, [breedImages]);
 
   const fetchBreedImages = useCallback(
     async (currBreedId: string, currPage: number) => {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
 
-      const images = await api.getBreedImages({
-        breedId: currBreedId,
-        page: currPage,
-      });
+        const imagesResponse = await api.getBreedImages({
+          breedId: currBreedId,
+          page: currPage,
+        });
 
-      if (images.length === 0) {
-        setIsEndReached(true);
+        if (imagesResponse.length === 0) {
+          setIsEndReached(true);
+        }
+
+        const prevImages = currPage === 1 ? [] : [...breedImages];
+
+        const uniqueImages = filterUniqueImages(prevImages, imagesResponse);
+
+        // Set end reached if no updates in unique image count
+        if (currPage > 1 && uniqueImages.length <= prevImages.length) {
+          setIsEndReached(true);
+        }
+
+        setBreedImages(uniqueImages);
+        setIsLoading(false);
+        setIsError(false);
+        setIsRequested(true);
+      } catch (err: any) {
+        setIsError(true);
       }
-
-      setBreedImages((prevImages) => prevImages.concat(images));
-
-      setIsLoading(false);
-      setIsRequested(true);
     },
-    [],
+    [breedImages],
   );
 
   const getNextPage = useCallback(() => {
@@ -65,7 +103,7 @@ const CatBreedProvider = ({ children }: { children: ReactNode }) => {
 
   const setBreed = useCallback(
     (id: string) => {
-      // Reset values on change
+      // Reset values on breed change
       setBreedId(id);
       setBreedImages([]);
       setPage(1);
@@ -90,6 +128,7 @@ const CatBreedProvider = ({ children }: { children: ReactNode }) => {
         isEndReached,
         isLoading,
         isRequested,
+        isError,
         getNextPage,
       }}
     >

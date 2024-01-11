@@ -22,10 +22,17 @@ import ErrorFallback from './common/ErrorFallback';
 
 const catBreedRoutes = (
   <Route path={AppRoutes.Root}>
-    {/* Homepage */}
+    {/**
+     * Homepage
+     * - loader: call api to get all breeds and load to the component
+     */}
     <Route index element={<Homepage />} loader={HomepageLoader} />
 
-    {/* Single Cat Pate - exact routing */}
+    {/**
+     * Single Cat Page
+     * - exact path routing '*'
+     * - loader: call api to get image and breed info and load to the component
+     */}
     <Route
       path={AppRoutes.SingleCat}
       element={<SingleCat />}

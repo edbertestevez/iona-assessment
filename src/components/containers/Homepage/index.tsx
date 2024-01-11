@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 import CatCard from './CatCard';
 import { HomepageLoaderData } from './loader';
+import { MESSAGES } from '../../../constants';
 import { useCatBreedContext } from '../../context/CatBreedContext';
 
 const Homepage: React.FC = () => {
@@ -21,6 +22,7 @@ const Homepage: React.FC = () => {
     hasBreedImages,
     isRequested,
     isLoading,
+    isError,
     isEndReached,
   } = useCatBreedContext();
 
@@ -61,13 +63,15 @@ const Homepage: React.FC = () => {
         ))}
       </Selection>
 
-      {!hasBreedImages && (
+      {!hasBreedImages && !isError && (
         <>
           {isRequested && <Info>No cats found</Info>}
 
           {!isRequested && isLoading && <Info>Loading cats . . .</Info>}
         </>
       )}
+
+      {isError && <Alert variant="danger">{MESSAGES.genericError}</Alert>}
 
       {hasBreedImages && (
         <>
@@ -110,13 +114,14 @@ const Title = styled.h1``;
 
 const Selection = styled(Form.Select)`
   margin-top: 24px;
+  margin-bottom: 24px;
   @media (min-width: 768px) {
     max-width: 400px;
   }
 `;
 
 const ListContainer = styled(Container)`
-  margin: 32px 0px 0px 0px;
+  margin: 0px;
   padding-left: 0px;
   padding-right: 0px;
 `;

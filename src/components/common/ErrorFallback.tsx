@@ -5,17 +5,16 @@ import styled from 'styled-components';
 
 import ErrorCat from '../../assets/error.gif';
 import AppRoutes from '../../config/routes';
+import { MESSAGES } from '../../constants';
 
-const ErrorFallbak: React.FC = () => {
+const ErrorFallback: React.FC = () => {
   return (
     <Wrapper>
       <ErrorMedia src={ErrorCat} roundedCircle />
-      <Message variant="danger">
-        Apologies but we could not load new cats for you at this time! Miau!
-      </Message>
+      <Alert variant="danger">{MESSAGES.genericError}</Alert>
 
       <Link to={AppRoutes.Root}>
-        <Button>Return home</Button>
+        <Button>Return to homepage</Button>
       </Link>
     </Wrapper>
   );
@@ -36,6 +35,4 @@ const ErrorMedia = styled(Image)`
   object-fit: contain;
 `;
 
-const Message = styled(Alert)``;
-
-export default ErrorFallbak;
+export default ErrorFallback;

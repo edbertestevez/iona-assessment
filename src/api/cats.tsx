@@ -3,12 +3,12 @@ import axios from 'axios';
 import { CATS_API_KEY } from '../config/api';
 import { Breed, BreedImage } from '../types/Breed';
 
-const RESPONSE_LIMIT = 8;
+const RESPONSE_LIMIT = 10;
 
 export const getAllBreeds = async (): Promise<Breed[]> => {
   try {
-    const breeds = await axios.get('https://api.thecatapi.com/v1/breeds');
-    return breeds.data;
+    const response = await axios.get('https://api.thecatapi.com/v1/breeds');
+    return response.data;
   } catch (err) {
     console.error('Error fetching cat breeds data: ', err);
     throw err;
@@ -26,7 +26,7 @@ export const getBreedImages = async ({
   breedId,
 }: GetBreedImagesProps): Promise<BreedImage[]> => {
   try {
-    const breedImages = await axios.get(
+    const response = await axios.get(
       `https://api.thecatapi.com/v1/images/search?page=${page}&limit=${RESPONSE_LIMIT}&breed_ids=${breedId}&size=thumb&has_breeds=true&include_breeds=0&include_categories=0`,
       {
         headers: {
@@ -35,7 +35,8 @@ export const getBreedImages = async ({
         },
       },
     );
-    return breedImages.data;
+
+    return response.data;
   } catch (err) {
     console.error('Error fetching cat breed images data: ', err);
     throw err;
@@ -44,10 +45,11 @@ export const getBreedImages = async ({
 
 export const getBreedImageWithInfo = async (imageId: string) => {
   try {
-    const breedImageWithInfo = await axios.get(
+    const response = await axios.get(
       `https://api.thecatapi.com/v1/images/${imageId}`,
     );
-    return breedImageWithInfo.data;
+
+    return response.data;
   } catch (err) {
     console.error('Error fetching cat breed image with info data: ', err);
     throw err;
