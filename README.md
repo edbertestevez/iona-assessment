@@ -72,14 +72,16 @@ https://github.com/edbertestevez/iona-assessment/assets/33598612/1fd34b9b-6d45-4
 
 
 ### ERROR FALLBACKS
-<p>
   1. Error Boundary
   <br/>
   <img src="screenshots/api-error-fallback.png" height="400" style='object-fit: contain;'/>
+  
+https://github.com/edbertestevez/iona-assessment/assets/33598612/90b3a995-ad4f-4f65-bd44-7656a7d7421c
+
+
   <br/>
   <br/>
   2. Inline error for breed images list
   <br/>
   <img src="screenshots/inline-error-fallback.png" height="300" style='object-fit: contain;'/>
   <br/>
-</p>
