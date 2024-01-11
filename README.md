@@ -12,7 +12,7 @@ The application was built with ReactJS + Typescript for a coding exam.
   - Display list of selected cat breed images (paginated)
   - View Cat breed image and information
 
-### Required Libraries
+## Required Libraries
   - React
   - Typescript
   - React Hooks
@@ -52,10 +52,11 @@ project
 │   └─── constants                          # Constants files like messages, labels, etc.
 │   └─── components                         # Application components
 │          └─── common                      # Reusable components on modules
-│          └────Main.tsx                           # Main application component
 │          └─── containers                  # Application modules screens
 │             └─── <Module / Screen>
-│                   └─── ...<components>    # Module related components
+│                   └─── ...<components>    # Screen / Module related components
+│                   └─── loader.tsx         # React router's loader definition that loads data to the route before it renders
+│          └────Main.tsx                    # Main application component
 │   └─── types                              # Type definitions
 │   └─── utils                              # Utils such as web vitals, common functions, etc.
 │   └────index.tsx                          # Root application renderer
